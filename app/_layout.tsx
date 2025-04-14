@@ -15,8 +15,8 @@ export default function RootLayout() {
         <Stack.Screen
           name="(from)/from-money"
           options={{
-            // presentation: "modal", // 또는 'transparentModal'도 가능
-            // gestureEnabled: true, // 드래그해서 닫기
+            presentation: "modal", // 또는 'transparentModal'도 가능
+            gestureEnabled: true, // 드래그해서 닫기
             animation: "slide_from_right", // 슬라이드 효과
           }}
         />

@@ -1,46 +1,49 @@
 import {
-  Select,
-  SelectTrigger,
-  SelectInput,
-  SelectIcon,
-  SelectPortal,
-  SelectBackdrop,
-  SelectContent,
-  SelectDragIndicatorWrapper,
-  SelectDragIndicator,
-  SelectItem,
-} from "@/components/ui/select";
-import { ChevronDownIcon } from "@/components/ui/icon";
+  Actionsheet,
+  ActionsheetContent,
+  ActionsheetItem,
+  ActionsheetItemText,
+  ActionsheetDragIndicator,
+  ActionsheetDragIndicatorWrapper,
+  ActionsheetBackdrop,
+} from "@/components/ui/actionsheet"
+
 import { countries } from "@/lib/data/countries";
 
 export function CountrySelector({
   selected,
   onChange,
+  showActionsheet,
+  handleClose,
 }: {
   selected: string;
   onChange: (value: string) => void;
+  showActionsheet: boolean;
+  handleClose: () => void;
 }) {
   return (
-    <Select selectedValue={selected} onValueChange={(value) => onChange(value)}>
-      <SelectTrigger variant="underlined" size="xl">
-        <SelectInput placeholder="Select option" />
-        <SelectIcon className="mr-3" as={ChevronDownIcon} />
-      </SelectTrigger>
-      <SelectPortal>
-        <SelectBackdrop />
-        <SelectContent>
-          <SelectDragIndicatorWrapper>
-            <SelectDragIndicator />
-          </SelectDragIndicatorWrapper>
-          {countries.map((country) => (
-            <SelectItem
-              key={country.code}
-              label={`${country.flag} ${country.name} (${country.code})`}
-              value={country.code}
-            />
-          ))}
-        </SelectContent>
-      </SelectPortal>
-    </Select>
+    <Actionsheet isOpen={showActionsheet} onClose={handleClose}>
+      <ActionsheetBackdrop />
+      <ActionsheetContent>
+        <ActionsheetDragIndicatorWrapper>
+          <ActionsheetDragIndicator />
+        </ActionsheetDragIndicatorWrapper>
+        <ActionsheetItem onPress={handleClose}>
+          <ActionsheetItemText>Edit Message</ActionsheetItemText>
+        </ActionsheetItem>
+        <ActionsheetItem onPress={handleClose}>
+          <ActionsheetItemText>Mark Unread</ActionsheetItemText>
+        </ActionsheetItem>
+        <ActionsheetItem onPress={handleClose}>
+          <ActionsheetItemText>Remind Me</ActionsheetItemText>
+        </ActionsheetItem>
+        <ActionsheetItem onPress={handleClose}>
+          <ActionsheetItemText>Add to Saved Items</ActionsheetItemText>
+        </ActionsheetItem>
+        <ActionsheetItem isDisabled onPress={handleClose}>
+          <ActionsheetItemText>Delete</ActionsheetItemText>
+        </ActionsheetItem>
+      </ActionsheetContent>
+    </Actionsheet>
   );
 }

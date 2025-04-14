@@ -36,6 +36,21 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "21e64f68-4356-409e-bcc1-0528225ce3f1"
+      }
+    },
+    "owner": "dante_choi",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/21e64f68-4356-409e-bcc1-0528225ce3f1"
     }
   }
 }

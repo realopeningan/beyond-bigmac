@@ -4,7 +4,8 @@ import { Text } from "@/components/ui/text";
 import { Link } from "expo-router";
 
 import { LinearGradient } from "expo-linear-gradient";
-import { Image, StyleSheet } from "react-native";
+import { Button, Image, Pressable, StyleSheet } from "react-native";
+
 export default function Index() {
   return (
     <LinearGradient
