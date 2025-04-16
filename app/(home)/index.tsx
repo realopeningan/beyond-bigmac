@@ -5,8 +5,11 @@ import { Link } from "expo-router";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { Button, Image, Pressable, StyleSheet } from "react-native";
+import { useAppStore } from "@/lib/zustand/store";
 
 export default function Index() {
+  const { state, setState } = useAppStore();
+
   return (
     <LinearGradient
       colors={["#FFFBDA", "#FFBB70"]} // 감성 배경
@@ -25,6 +28,11 @@ export default function Index() {
           <Text className="text-black text-xl py-3 px-5 bg-white rounded-lg">
             몇 개의 빅맥을 살 수 있을까요?
           </Text>
+          {(state.money > 0 || state.country.length > 0) && (
+            <Text className="text-black text-xl py-3 px-5 bg-white rounded-lg">
+              {state.country}, {state.money}원으로
+            </Text>
+          )}
         </Box>
       </Box>
     </LinearGradient>

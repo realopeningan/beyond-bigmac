@@ -12,14 +12,15 @@ import { Text } from "@/components/ui/text";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { countries } from "@/lib/data/countries";
+import { useAppStore } from "@/lib/zustand/store";
 
 export default function FromMoney() {
   const [selectedCountry, setSelectedCountry] = useState("KRW");
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchText, setSearchText] = useState(""); // 실제 TextInput에 표시되는 값
-
   const [money, setMoney] = useState("");
+  const { state, setState } = useAppStore();
 
   // 필터된 국가 리스트
   const filteredCountries = countries.filter((country) =>
@@ -106,6 +107,11 @@ export default function FromMoney() {
               <TouchableOpacity
                 className="mt-10 bg-white py-4 px-6 rounded-xl border border-gray-300"
                 onPress={() => {
+                  const safeNumber = parseInt(money.replace(/[^0-9]/g, '') || '0', 10);
+                  setState({
+                    money: safeNumber,
+                    country: selectedCountry,
+                  });
                   router.back(); // TODO : 변경
                 }}
               >
