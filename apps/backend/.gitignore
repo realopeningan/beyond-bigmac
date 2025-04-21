@@ -1,0 +1,24 @@
+# 🔒 보안 / 민감한 정보
+.env
+.aws/
+
+# 🧠 빌드 아웃풋
+node_modules/
+cdk.out/
+dist/
+build/
+
+# 🧹 시스템 잡동사니
+.DS_Store
+*.log
+*.tmp
+
+# 🛠️ IDE, Editor
+.vscode/
+.idea/
+
+# 🔧 CDK / TypeScript 관련
+*.js
+!jest.config.js
+*.d.ts
+.cdk.staging
