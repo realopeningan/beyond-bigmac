@@ -8,6 +8,7 @@ import * as path from "path";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import * as events from "aws-cdk-lib/aws-events";
 import * as targets from "aws-cdk-lib/aws-events-targets";
+import * as ssm from "aws-cdk-lib/aws-ssm";
 
 export class BackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -18,6 +19,12 @@ export class BackendStack extends cdk.Stack {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
+
+    const apiKeyParam = ssm.StringParameter.fromStringParameterName(
+      this,
+      "ExchangeRateApiKeyParam",
+      "/beyond-bigmac/exchangerate-api-key"
+    );
 
     const lambdaFn = new NodejsFunction(this, "ExchangeRateApiHandler", {
       runtime: lambda.Runtime.NODEJS_18_X,
@@ -51,9 +58,11 @@ export class BackendStack extends cdk.Stack {
         timeout: cdk.Duration.seconds(10),
         environment: {
           TABLE_NAME: table.tableName,
+          API_KEY_PARAM: apiKeyParam.parameterName,
         },
       }
     );
+    apiKeyParam.grantRead(exchangeRateSaveLambda);
 
     new events.Rule(this, "DailyTrigger", {
       schedule: events.Schedule.cron({ minute: "0", hour: "15" }), // UTC 15시 = KST 자정
